@@ -1,5 +1,5 @@
 {
-    "name": "evodelavega/freshdesk-rest",
+    "name": "evodelavega/pushover-net",
     "description": "A simple wrapper for the Pushover.net API",
     "keywords": ["pushover", "Pushover.net", "notifications", "notification", "push", "Wrapper", "client", "JSON"],
     "license": "MIT",
