@@ -10,9 +10,10 @@ abstract class Data
      */
     public function toArray($includeNull = false)
     {
-        $properties = get_class_vars($this);
+
+        $properties = get_object_vars($this);
         $array = [];
-        foreach ($properties as $prop)
+        foreach ($properties as $prop => $value)
         {
             $value = $this->{$prop};
             if ($value !== null || $includeNull === true)

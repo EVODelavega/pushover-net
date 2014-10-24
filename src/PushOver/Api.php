@@ -108,6 +108,7 @@ abstract class Api
             $options
         );
         $response = curl_exec($ch);
+        curl_close($ch);
         return $this->{$this->responseMethod}($response);
     }
 

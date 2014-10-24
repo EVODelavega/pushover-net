@@ -11,9 +11,16 @@ class Push extends Api
     /**
      * @param Message $msg
      * @return Model\Response
+     * @throws \InvalidArgumentException
      */
     public function pushMessage(Message $msg)
     {
+        if ($msg->getCredentials() === null)
+        {
+            throw new \InvalidArgumentException(
+                'No credentials set on message, cannot push message'
+            );
+        }
         return $this->doCurl($msg);
     }
 }
