@@ -25,7 +25,7 @@ abstract class Api
     /**
      * @var string
      */
-    private $apiUrl = null;
+    protected $apiUrl = null;
 
     /**
      * @var string
@@ -80,10 +80,12 @@ abstract class Api
     /**
      * @param Data $data
      * @param array $curlOpts
-     * @return Response
+     * @return resource
      */
-    protected function doCurl(Data $data, array $curlOpts = [])
+    private function prepareCurl(Data $data, array $curlOpts = [])
     {
+        if ($curlOpts && isset($curlOpts[\CURLOPT_RETURNTRANSFER]))
+            $curlOpts[\CURLOPT_RETURNTRANSFER] = true;//make sure this is true
         $ch = curl_init(
             $this->getApiUrl()
         );
@@ -107,9 +109,39 @@ abstract class Api
             $ch,
             $options
         );
+        return $ch;
+    }
+
+    /**
+     * @param Data $data
+     * @param array $curlOpts
+     * @return Response
+     */
+    protected function doCurl(Data $data, array $curlOpts = [])
+    {
+        $ch = $this->prepareCurl(
+            $data,
+            $curlOpts
+        );
         $response = curl_exec($ch);
         curl_close($ch);
         return $this->{$this->responseMethod}($response);
+    }
+
+    /**
+     * @param Data $data
+     * @param array $opts
+     * @return string|bool
+     */
+    protected function getRawCurl(Data $data, array $opts = [])
+    {
+        $ch = $this->prepareCurl(
+            $data,
+            $opts
+        );
+        $response = curl_exec($ch);
+        curl_close($ch);
+        return $response;
     }
 
     /**

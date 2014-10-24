@@ -30,6 +30,9 @@ class Response extends Data
      */
     protected $user = null;
 
+    /**
+     * @param \stdClass $obj
+     */
     public function __construct(\stdClass $obj)
     {
         $this->setByArray((array) $obj);
