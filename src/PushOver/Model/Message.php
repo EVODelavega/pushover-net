@@ -121,9 +121,21 @@ class Message extends Data
     /**
      * @param string $device
      * @return $this
+     * @throws \InvalidArgumentException
      */
     public function setDevice($device)
     {
+        $match = null;
+        if (strlen($device) > 25 || preg_match('/[^a-z0-9]/i', $device, $match))
+        {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    '%s is an invalid device name. Reason: %s',
+                    $device,
+                    $match ? 'Contains illegal chars' : 'Too long'
+                )
+            );
+        }
         $this->device = $device;
 
         return $this;

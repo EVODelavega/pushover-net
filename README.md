@@ -3,10 +3,32 @@ pushover-net
 
 Simple, standalone, clean PHP wrapper for the pushover.net API
 
-## What is working:
+## What can this wrapper do?
 
-Put simply, creating a message and sending it is working just fine (check examples/example.php for a working code example).
-Is it working fully? Not quite, the receipt part of messages is not quite there yet. Still, seeing as most (if not all) API wrappers out there focus mainly (or even only) on the pushing of messages, I've put this wrapper out there already.
+Good question. Put simply this is a minimalistic setup which allows you to:
+
+- Push messages (examples/example.php shows you how)
+- Validate users, groups and their devices
+- Process receipts, if you want to
+- Easily extend the functionality (look at the base classes `PushOver\Api` and `PushOver\Model\Data`)
+
+## What can't it do (yet)?
+
+Another good question. Things that are missing from this wrapper (but will be added shortly) are:
+
+- Support for XML formatted responses
+- More examples
+- Unit tests
+- Improve data-model consistency, and make the overall API more consistent
+
+What might be added in the future?
+
+- Better error/exception handling
+- Data models should implement the `\Traversable` interface somehow
+- A php 5.3 compatible branch??
+- ...
+
+I'm open to suggestions, so if there's something you're looking for and, like me, found the existing wrappers lacking: create an issue, and I'll be happy to look into it
 
 ### Getting the example.php script to work
 
@@ -26,3 +48,9 @@ It's as simple as creating the `params.json` file in the examples directory. The
 ```
 
 That's it!
+
+==========
+
+# Contributing is optional, but encouraged.
+
+If you see room for improvement, or want to make a suggestion: don't hold back, create issues. Fork, create pull requests... the works. Collaborating is fun.

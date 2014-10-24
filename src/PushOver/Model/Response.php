@@ -31,11 +31,34 @@ class Response extends Data
     protected $user = null;
 
     /**
+     * @var array
+     */
+    protected $devices = null;
+
+    /**
      * @param \stdClass $obj
      */
     public function __construct(\stdClass $obj)
     {
         $this->setByArray((array) $obj);
+    }
+
+    /**
+     * @param array $devices
+     * @return $this
+     */
+    public function setDevices(array $devices)
+    {
+        $this->devices = $devices;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDevices()
+    {
+        return $this->devices;
     }
 
     /**
