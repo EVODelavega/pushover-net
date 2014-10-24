@@ -1,0 +1,21 @@
+{
+    "name": "evodelavega/freshdesk-rest",
+    "description": "A simple wrapper for the Pushover.net API",
+    "keywords": ["pushover", "Pushover.net", "notifications", "notification", "push", "Wrapper", "client", "JSON"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Elias Van Ootegem",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-0" : {
+            "PushOver" : "src"
+        }
+    },
+    "require": {
+        "php": ">=5.4.0",
+        "ext-curl": "*"
+    }
+}

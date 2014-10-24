@@ -2,6 +2,9 @@
 
 namespace PushOver;
 
+use PushOver\Model\Data,
+    PushOver\Model\Response;
+
 abstract class Api
 {
     const API_SECTION = '';
@@ -23,6 +26,11 @@ abstract class Api
      * @var string
      */
     private $apiUrl = null;
+
+    /**
+     * @var string
+     */
+    private $responseMethod = 'processJson';
 
     /**
      * @param array $params = []
@@ -70,6 +78,75 @@ abstract class Api
     }
 
     /**
+     * @param Data $data
+     * @param array $curlOpts
+     * @return Response
+     */
+    protected function doCurl(Data $data, array $curlOpts = [])
+    {
+        $ch = curl_init(
+            $this->getApiUrl()
+        );
+        if (!is_resource($ch))
+        {
+            throw new \RuntimeException(
+                sprintf(
+                    'Error initializing curl request for class %s',
+                    get_class($this)
+                )
+            );
+        }
+        $options = [
+            \CURLOPT_POSTFIELDS     => $data->toArray(),
+            \CURLOPT_SAFE_UPLOAD    => true,
+            \CURLOPT_RETURNTRANSFER => true
+        ];
+        foreach ($curlOpts as $key => $v)
+            $options[$key] = $v;
+        curl_setopt_array(
+            $ch,
+            $options
+        );
+        $response = curl_exec($ch);
+        return $this->{$this->responseMethod}($response);
+    }
+
+    /**
+     * @param string $string
+     * @return Response
+     * @throws \RuntimeException
+     */
+    protected function processJson($string)
+    {
+        $obj = json_decode($string);
+        $err = json_last_error();
+        if ($err !== \JSON_ERROR_NONE)
+        {
+            throw new \RuntimeException(
+                sprintf(
+                    'JSON error %d - %s (response: %s)',
+                    $err,
+                    json_last_error_msg(),
+                    $string
+                )
+            );
+        }
+        return new Response($obj);
+    }
+
+    /**
+     * @param string $xml
+     * @throws \LogicException
+     */
+    protected function processXml($xml)
+    {
+        throw new \LogicException(
+            'You should not have been able to do this, %s cannot be parsed yet',
+            $xml
+        );
+    }
+
+    /**
      * @param string $output
      * @return $this
      *
@@ -91,6 +168,11 @@ abstract class Api
         //XML is unsupported ATM
         if ($output === self::OUTPUT_XML)
             throw new \LogicException('XML output is not supported yet');
+        $this->responseMethod = 'process'.ucfirst(
+                substr(
+                    $output, 1
+                )
+            );
         $this->output = $output;
         return $this;
     }
