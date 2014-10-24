@@ -10,6 +10,11 @@ class Receipt extends Api
 {
     const API_SECTION = 'receipts/%s';
 
+    /**
+     * @param Response $response
+     * @param Credentials $credentials
+     * @return ReceiptResponse
+     */
     public function getReceipt(Response $response, Credentials $credentials)
     {
         if ($this->output !== self::OUTPUT_JSON)
