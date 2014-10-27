@@ -47,6 +47,8 @@ It's as simple as creating the `params.json` file in the examples directory. The
 }
 ```
 
+If you're trying to use the `Api::GetApiSection` method to load an API class other than `PushOver\Push`, don't forget to `require` it (or better yet, register the autoloader composer will helpfully give you)
+
 That's it!
 
 ==========

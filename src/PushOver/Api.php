@@ -12,6 +12,10 @@ abstract class Api
     const OUTPUT_JSON = '.json';
     const OUTPUT_XML = '.xml';
 
+    const SECTION_PUSH = 1;
+    const SECTION_RECEIPT = 2;
+    const SECTION_VALIDATE = 3;
+
     /**
      * @var string
      */
@@ -31,6 +35,15 @@ abstract class Api
      * @var string
      */
     private $responseMethod = 'processJson';
+
+    /**
+     * @var array
+     */
+    private static $Sections = [
+        self::SECTION_PUSH      => null,
+        self::SECTION_RECEIPT   => null,
+        self::SECTION_VALIDATE  => null
+    ];
 
     /**
      * @param array $params = []
@@ -75,6 +88,41 @@ abstract class Api
         if ($this->apiUrl === null)
             $this->apiUrl = $this->baseUrl.static::API_SECTION.$this->output;
         return $this->apiUrl;
+    }
+
+    /**
+     * @param $section
+     * @param array $args
+     * @return \PushOver\Api
+     * @throws \InvalidArgumentException
+     */
+    final public static function GetApiSection($section, array $args = [])
+    {
+        if (!array_key_exists($section, static::$Sections))
+        {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    '%s is not a valid section, please use %s::SECTION_* constants',
+                    $section,
+                    __CLASS__
+                )
+            );
+        }
+        if (static::$Sections[$section] instanceof Api)
+            return static::$Sections[$section];
+        switch ($section)
+        {
+            case self::SECTION_VALIDATE:
+                static::$Sections[$section] = new Validate($args);
+                break;
+            case self::SECTION_PUSH:
+                static::$Sections[$section] = new Push($args);
+                break;
+            case self::SECTION_RECEIPT:
+                static::$Sections[$section] = new Receipt($args);
+                break;
+        }
+        return self::$Sections[$section];
     }
 
     /**
