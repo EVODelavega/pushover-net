@@ -5,6 +5,8 @@ namespace PushOver\Model;
 
 class Response extends Data
 {
+    const STATUS_OK = 1;
+
     /**
      * @var int
      */
@@ -151,7 +153,7 @@ class Response extends Data
      */
     public function setStatus($status)
     {
-        $this->status = $status;
+        $this->status = (int) $status;
 
         return $this;
     }

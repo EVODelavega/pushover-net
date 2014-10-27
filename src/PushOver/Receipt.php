@@ -14,6 +14,7 @@ class Receipt extends Api
      * @param Response $response
      * @param Credentials $credentials
      * @return ReceiptResponse
+     * @throws \LogicException
      */
     public function getReceipt(Response $response, Credentials $credentials)
     {
@@ -23,6 +24,15 @@ class Receipt extends Api
                 sprintf(
                     '%s output is not supported (yet)',
                     $this->output
+                )
+            );
+        }
+        if (!$response->getReceipt())
+        {
+            throw new \LogicException(
+                sprintf(
+                    'The response (which was %s) does not have a receipt value',
+                    $response->getStatus() !== Response::STATUS_OK ? 'Unsuccessful' : 'Successful'
                 )
             );
         }

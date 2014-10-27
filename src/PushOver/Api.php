@@ -9,12 +9,12 @@ abstract class Api
 {
     const API_SECTION = '';
 
-    const OUTPUT_JSON = '.json';
-    const OUTPUT_XML = '.xml';
+    const OUTPUT_JSON   = '.json';
+    const OUTPUT_XML    = '.xml';
 
-    const SECTION_PUSH = 1;
-    const SECTION_RECEIPT = 2;
-    const SECTION_VALIDATE = 3;
+    const SECTION_PUSH      = 1;
+    const SECTION_RECEIPT   = 2;
+    const SECTION_VALIDATE  = 3;
 
     /**
      * @var string
