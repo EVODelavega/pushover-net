@@ -3,6 +3,63 @@ pushover-net
 
 Simple, standalone, clean PHP wrapper for the pushover.net API
 
+### A basic example (push a message):
+
+Pushing a message is quite simple. But unlike other wrappers I've seen, it is equally easy to validate users and groups,
+Check receipts for pushed message, choose the sounds (through constants) etc...
+
+Here's a simple example:
+
+```php
+<?php
+$credentials = new Credentials(
+    'APP token',
+    'user API'
+);
+
+//API settings array
+$apiSettings = [
+    'baseUrl'   => 'the url',//default works fine
+    'output'    => Api::OUTPUT_JSON
+];
+
+//create message object
+$message = new Message(
+    [
+        'message'  => 'The message',
+        'title'    => 'The title',
+        'priority' => Message::PRIORITY_EMERGENCY,
+        'sound'    => Message::SOUND_GAME
+    ],
+    $credentials
+);
+
+//USING THE WRAPPER:
+//get API section:
+$api = Api::GetApiSection(
+    Api::SECTION_PUSH,//get push section,
+    $apiSettings
+);
+
+//push message
+$response = $api->pushMessage($message);
+
+//check receipt, alternative way of creating API wrapper:
+$api = new Receipt($apiSettings);
+
+//get the receipt for the response
+$receipt = $api->getReceipt(
+    $response,
+    $credentials
+);
+
+```
+
+Bascially, this example serves to show that, after constructing the `Credentials` class, the use of the API is pretty
+straightforward. After all things have been set up, it's a simple matter of passing through objects.
+
+If anything goes wrong, an appropriate exception will be thrown.
+
 ## What can this wrapper do?
 
 Good question. Put simply this is a minimalistic setup which allows you to:
