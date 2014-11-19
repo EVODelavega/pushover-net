@@ -43,11 +43,11 @@ class Receipt extends Api
             $this->getApiUrl(true),
             $response->getReceipt()
         );
-        $options = [
-            \CURLOPT_POSTFIELDS => [
+        $options = array(
+            \CURLOPT_POSTFIELDS => array(
                 'token' => $credentials->getToken()
-            ]
-        ];
+            )
+        );
         $curlResp = $this->getRawCurl(
             $response,
             $options

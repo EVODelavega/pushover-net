@@ -39,16 +39,16 @@ abstract class Api
     /**
      * @var array
      */
-    private static $Sections = [
+    private static $Sections = array(
         self::SECTION_PUSH      => null,
         self::SECTION_RECEIPT   => null,
         self::SECTION_VALIDATE  => null
-    ];
+    );
 
     /**
-     * @param array $params = []
+     * @param array $params = array()
      */
-    public function __construct(array $params = [])
+    public function __construct(array $params = array())
     {
         if (static::API_SECTION === self::API_SECTION)
         {//constants MUST be overriden in child classes
@@ -96,7 +96,7 @@ abstract class Api
      * @return \PushOver\Api
      * @throws \InvalidArgumentException
      */
-    final public static function GetApiSection($section, array $args = [])
+    final public static function GetApiSection($section, array $args = array())
     {
         if (!array_key_exists($section, static::$Sections))
         {
@@ -127,10 +127,10 @@ abstract class Api
 
     /**
      * @param Data $data
-     * @param array $curlOpts
+     * @param array $curlOpts = array()
      * @return resource
      */
-    private function prepareCurl(Data $data, array $curlOpts = [])
+    private function prepareCurl(Data $data, array $curlOpts = array())
     {
         if ($curlOpts && isset($curlOpts[\CURLOPT_RETURNTRANSFER]))
             $curlOpts[\CURLOPT_RETURNTRANSFER] = true;//make sure this is true
@@ -146,11 +146,11 @@ abstract class Api
                 )
             );
         }
-        $options = [
+        $options = array(
             \CURLOPT_POSTFIELDS     => $data->toArray(),
             \CURLOPT_SAFE_UPLOAD    => true,
             \CURLOPT_RETURNTRANSFER => true
-        ];
+        );
         foreach ($curlOpts as $key => $v)
             $options[$key] = $v;
         curl_setopt_array(
@@ -162,10 +162,10 @@ abstract class Api
 
     /**
      * @param Data $data
-     * @param array $curlOpts
+     * @param array $curlOpts = array()
      * @return Response
      */
-    protected function doCurl(Data $data, array $curlOpts = [])
+    protected function doCurl(Data $data, array $curlOpts = array())
     {
         $ch = $this->prepareCurl(
             $data,
@@ -178,10 +178,10 @@ abstract class Api
 
     /**
      * @param Data $data
-     * @param array $opts
+     * @param array $opts = array()
      * @return string|bool
      */
-    protected function getRawCurl(Data $data, array $opts = [])
+    protected function getRawCurl(Data $data, array $opts = array())
     {
         $ch = $this->prepareCurl(
             $data,

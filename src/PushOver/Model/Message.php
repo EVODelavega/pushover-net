@@ -81,10 +81,10 @@ class Message extends Data
     protected $sound = null;
 
     /**
-     * @param array $values = []
+     * @param array $values = array()
      * @param Credentials $credentials = null
      */
-    public function __construct(array $values = [], Credentials $credentials = null)
+    public function __construct(array $values = array(), Credentials $credentials = null)
     {
         $this->setByArray($values);
         if ($credentials)

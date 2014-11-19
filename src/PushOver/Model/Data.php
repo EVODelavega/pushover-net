@@ -12,7 +12,7 @@ abstract class Data
     {
 
         $properties = get_object_vars($this);
-        $array = [];
+        $array = array();
         foreach ($properties as $prop => $value)
         {
             $value = $this->{$prop};

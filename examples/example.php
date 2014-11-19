@@ -27,28 +27,28 @@ $credentials = new Credentials(
 
 //create API section class separately
 $api = new Push(
-    [
+    array(
         'baseUrl'   => $params->api->baseUrl,
         'output'    => $params->api->output
-    ]
+    )
 );
 //alternative, using factory-like method @Api:
 $pushApi = Api::GetApiSection(
     Api::SECTION_PUSH,
-    [
+    array(
         'baseUrl'   => $params->api->baseUrl,
         'output'    => $params->api->output
-    ]
+    )
 );
 
 //create a message to send
 $message = new Message(
-    [
+    array(
         'message'   => 'This is an example test message',
         'title'     => 'example',
         'priority'  => Message::PRIORITY_HIGH,
         'sound'     => Message::SOUND_COSMIC
-    ],
+    ),
     //using these credentials
     $credentials
 );
@@ -56,8 +56,6 @@ $message = new Message(
 $response = $api->pushMessage($message);
 
 //dump the response
-die(
-    var_dump(
-        $response
-    )
+var_dump(
+    $response
 );
