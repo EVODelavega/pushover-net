@@ -21,19 +21,19 @@ $credentials = new Credentials(
 );
 
 //API settings array
-$apiSettings = [
+$apiSettings = array(
     'baseUrl'   => 'the url',//default works fine
     'output'    => Api::OUTPUT_JSON
-];
+);
 
 //create message object
 $message = new Message(
-    [
+    array(
         'message'  => 'The message',
         'title'    => 'The title',
         'priority' => Message::PRIORITY_EMERGENCY,
         'sound'    => Message::SOUND_GAME
-    ],
+    ),
     $credentials
 );
 
