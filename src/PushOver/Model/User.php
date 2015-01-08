@@ -19,6 +19,13 @@ class User extends Data
      */
     protected $device = null;
 
+    public function __construct(\stdClass $data = null)
+    {
+        if ($data)
+            $this->setByArray(
+                (array) $data
+            );
+    }
     /**
      * @param Credentials $credentials
      * @return $this
@@ -61,6 +68,20 @@ class User extends Data
      */
     public function setUser($user)
     {
+        if (!is_string($user))
+        {
+            if (is_object($user) && method_exists($user, '__toString'))
+            {//try string value of $dev
+                $user = (string) $user;
+            }
+            else
+            {//force exception by adding invalid chars
+                $user = sprintf(
+                    '!Invalid type: %s',
+                    gettype($user)
+                );
+            }
+        }
         $match = null;
         if (strlen($user) !== 30 || preg_match('/[^a-z0-9]/i', $user, $match))
         {
@@ -91,8 +112,22 @@ class User extends Data
      */
     public function setDevice($dev)
     {
+        if (!is_string($dev))
+        {
+            if (is_object($dev) && method_exists($dev, '__toString'))
+            {//try string value of $dev
+                $dev = (string) $dev;
+            }
+            else
+            {//force exception by adding invalid chars
+                $dev = sprintf(
+                    '!Invalid type: %s',
+                    gettype($dev)
+                );
+            }
+        }
         $match = null;
-        if (strlen($dev) > 25 || preg_match('/[^a-z0-9]/i', $dev, $match))
+        if (strlen($dev) > 25 || preg_match('/[^a-z0-9_-]/i', $dev, $match))
         {
             throw new \InvalidArgumentException(
                 sprintf(
@@ -136,8 +171,9 @@ class User extends Data
      */
     public function toArray($includeNull = false)
     {
-        $array = parent::toArray(false);
-        $array['token'] = $this->credentials->getToken();
+        $array = parent::toArray($includeNull);
+        if ($this->credentials)
+            $array['token'] = $this->credentials->getToken();
         return $array;
     }
 }
