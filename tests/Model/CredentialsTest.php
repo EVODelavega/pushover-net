@@ -49,6 +49,16 @@ class CredentialsTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider invalidConstructorProvider
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessageRegExp /Invalid .*?token [^:]+:/
+     */
+    public function testConstructorInvalid($user, $token)
+    {
+        new Credentials($user, $token);
+    }
+
+    /**
      * @return array
      */
     public function validConstructorProvider()
@@ -67,4 +77,27 @@ class CredentialsTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @return array
+     */
+    public function invalidConstructorProvider()
+    {
+        return array(
+            array(
+                'asdfghkj132456Nasdfghkj132456N',
+                'usertooshort'
+            ),
+            array(
+                'tokentooshort',
+                'userghkj132456Nasdfghkj132456N'
+            ),
+            array(
+                '!invalid_Ch@rs.asdfghkj132456N',
+                'userghkj132456Nasdfghkj132456N',
+            ),
+            array(
+                'asdfghkj132456Nasdfghkj132456N',
+                '!invalid_Ch@rs.asdfghkj132456N',            )
+        );
+    }
 }

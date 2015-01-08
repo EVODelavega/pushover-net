@@ -26,8 +26,11 @@ class Credentials extends Data
      */
     public function __construct($token, $user, $application = null)
     {
-        $this->token = $token;
-        $this->user = $user;
+        $this->setToken(
+            $token
+        )->setUser(
+            $user
+        );
         $this->application = $application;
     }
 
