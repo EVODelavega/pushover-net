@@ -1,0 +1,74 @@
+{
+  "success": [
+    {
+      "status":1,
+      "request":"e460545a8b333d0da2f3602aff3133d6"
+    },
+    {
+      "status":1,
+      "request":"132456789b333d0da2f3602aff3133d6"
+    },
+    {
+      "status":1,
+      "request":"e460545a8b333d0da2f3602aff313245",
+      "receipt": "1234657890abcdefhijklmnopqrstu"
+    },
+    {
+      "status":1,
+      "request":"e460545a8b333d0da2f3602aff313245",
+      "receipt": "1234657890abcdefhijklmnopqrXYZ"
+    }
+  ],
+  "receiptKeys": [
+    2,
+    3
+  ],
+  "error": [
+    {
+      "user":"invalid",
+      "errors":[
+        "user identifier is invalid"
+      ],
+      "status":0,
+      "request":"3c0b5952fba0ab27805159217077c177"
+    },
+    {
+      "unknown":"parameter",
+      "errors":[
+        "A generic error message"
+      ],
+      "status":0,
+      "request":"3c0b5952fba0abX7805159217077c177"
+    }
+  ],
+  "receipts": [
+    {
+      "1234657890abcdefhijklmnopqrstu": {
+        "status": 1,
+        "acknowledged": 0,
+        "acknowledged_at": 0,
+        "last_delivered_at": 0,
+        "expired": 0,
+        "expires_at": 3600,
+        "called_back": 1,
+        "called_back_at": 0
+      },
+      "1234657890abcdefhijklmnopqrXYZ": {
+        "status": 1,
+        "acknowledged": 1,
+        "acknowledged_at": "now",
+        "last_delivered_at": "1 hour ago",
+        "expired": 0,
+        "expires_at": 3600,
+        "called_back": 1,
+        "called_back_at": 0
+      },
+      "1234657890abcdefhijklmnopqrXYZ": {
+        "status": 0,
+        "errors": [
+          "random error"
+        ]
+      }
+    }
+  ]
+}

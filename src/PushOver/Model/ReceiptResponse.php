@@ -37,7 +37,7 @@ class ReceiptResponse extends Data
     /**
      * @var \DateTime
      */
-    protected $expiredAt = null;
+    protected $expiresAt = null;
 
     /**
      * @var int
@@ -108,8 +108,15 @@ class ReceiptResponse extends Data
      */
     public function setAcknowledgedAt($acknowledgedAt)
     {
-        if (!$acknowledgedAt instanceof \DateTime)
-            $acknowledgedAt = new \DateTime($acknowledgedAt);
+        if ($acknowledgedAt != 0)
+        {
+            if (!$acknowledgedAt instanceof \DateTime)
+                $acknowledgedAt = new \DateTime($acknowledgedAt);
+        }
+        else
+        {
+            $acknowledgedAt = null;
+        }
         $this->acknowledgedAt = $acknowledgedAt;
 
         return $this;
@@ -167,8 +174,15 @@ class ReceiptResponse extends Data
      */
     public function setCallBackAt($callBackAt)
     {
-        if (!$callBackAt instanceof \DateTime)
-            $callBackAt = new \DateTime($callBackAt);
+        if ($callBackAt != 0)
+        {
+            if (!$callBackAt instanceof \DateTime)
+                $callBackAt = new \DateTime($callBackAt);
+        }
+        else
+        {
+            $callBackAt = null;
+        }
         $this->callBackAt = $callBackAt;
 
         return $this;
@@ -196,20 +210,20 @@ class ReceiptResponse extends Data
     /**
      * @return \DateTime
      */
-    public function getExpiredAt()
+    public function getExpiresAt()
     {
-        return $this->expiredAt;
+        return $this->expiresAt;
     }
 
     /**
-     * @param \DateTime $expiredAt
+     * @param \DateTime $expiresAt
      * @return $this
      */
-    public function setExpiredAt($expiredAt)
+    public function setExpiresAt($expiresAt)
     {
-        if (!$expiredAt instanceof \DateTime)
-            $expiredAt = new \DateTime($expiredAt);
-        $this->expiredAt = $expiredAt;
+        if (!$expiresAt instanceof \DateTime)
+            $expiresAt = new \DateTime($expiresAt);
+        $this->expiresAt = $expiresAt;
 
         return $this;
     }
@@ -228,8 +242,15 @@ class ReceiptResponse extends Data
      */
     public function setLastDeliveredAt($lastDeliveredAt)
     {
-        if (!$lastDeliveredAt instanceof \DateTime)
-            $lastDeliveredAt = new \DateTime($lastDeliveredAt);
+        if ($lastDeliveredAt != 0)
+        {
+            if (!$lastDeliveredAt instanceof \DateTime)
+                $lastDeliveredAt = new \DateTime($lastDeliveredAt);
+        }
+        else
+        {
+            $lastDeliveredAt = null;
+        }
         $this->lastDeliveredAt = $lastDeliveredAt;
 
         return $this;
