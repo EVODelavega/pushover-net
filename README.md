@@ -3,6 +3,9 @@ pushover-net
 
 Simple, standalone, clean PHP wrapper for the pushover.net API
 
+version/php5-3 build status:
+[![Build Status](https://travis-ci.org/EVODelavega/pushover-net.svg?branch=version%2Fphp5-3)](https://travis-ci.org/EVODelavega/pushover-net)
+
 ### A basic example (push a message):
 
 Pushing a message is quite simple. But unlike other wrappers I've seen, it is equally easy to validate users and groups,
