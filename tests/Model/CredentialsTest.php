@@ -97,7 +97,8 @@ class CredentialsTest extends PHPUnit_Framework_TestCase
             ),
             array(
                 'asdfghkj132456Nasdfghkj132456N',
-                '!invalid_Ch@rs.asdfghkj132456N',            )
+                '!invalid_Ch@rs.asdfghkj132456N',
+            )
         );
     }
 }
