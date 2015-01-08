@@ -12,12 +12,22 @@ class Receipt extends Api
 
     /**
      * @param Response $response
-     * @param Credentials $credentials
+     * @param Credentials $credentials = null
      * @return ReceiptResponse
      * @throws \LogicException
      */
-    public function getReceipt(Response $response, Credentials $credentials)
+    public function getReceipt(Response $response, Credentials $credentials = null)
     {
+        if (!$credentials && !$this->defaultCredentials)
+        {
+            throw new \LogicException(
+                sprintf(
+                    '%s requires credentials, no default credentials set, and no credentials were passed as argument',
+                    __METHOD__
+                )
+            );
+        }
+        $credentials = $credentials ? : $this->defaultCredentials;
         if ($this->output !== self::OUTPUT_JSON)
         {
             throw new \LogicException(

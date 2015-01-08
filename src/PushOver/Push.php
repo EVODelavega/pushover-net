@@ -15,6 +15,10 @@ class Push extends Api
      */
     public function pushMessage(Message $msg)
     {
+        if ($this->defaultCredentials && $msg->getCredentials() === null)
+            $msg->setCredentials(
+                $this->defaultCredentials
+            );
         if ($msg->getCredentials() === null)
         {
             throw new \InvalidArgumentException(

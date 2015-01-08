@@ -2,6 +2,7 @@
 
 namespace PushOver;
 
+use PushOver\Model\Credentials;
 use PushOver\Model\Data,
     PushOver\Model\Response;
 
@@ -32,6 +33,11 @@ abstract class Api
     protected $apiUrl = null;
 
     /**
+     * @var Credentials
+     */
+    protected $defaultCredentials = null;
+
+    /**
      * @var string
      */
     private $responseMethod = 'processJson';
@@ -47,8 +53,9 @@ abstract class Api
 
     /**
      * @param array $params = []
+     * @param Credentials $defaultCredentials = null
      */
-    public function __construct(array $params = [])
+    public function __construct(array $params = [], Credentials $defaultCredentials = null)
     {
         if (static::API_SECTION === self::API_SECTION)
         {//constants MUST be overriden in child classes
@@ -59,6 +66,10 @@ abstract class Api
                     __CLASS__
                 )
             );
+        }
+        if ($defaultCredentials)
+        {
+            $this->setDefaultCredentials($defaultCredentials);
         }
         foreach ($params as $key => $value)
         {
@@ -91,12 +102,31 @@ abstract class Api
     }
 
     /**
+     * @param Credentials $credentials
+     * @return $this
+     */
+    public function setDefaultCredentials(Credentials $credentials)
+    {
+        $this->defaultCredentials = $credentials;
+        return $this;
+    }
+
+    /**
+     * @return Credentials|null
+     */
+    public function getDefaultCredentials()
+    {
+        return $this->defaultCredentials;
+    }
+
+    /**
      * @param $section
      * @param array $args
+     * @param Credentials $credentials = null
      * @return \PushOver\Api
      * @throws \InvalidArgumentException
      */
-    final public static function GetApiSection($section, array $args = [])
+    final public static function GetApiSection($section, array $args = [], Credentials $credentials = null)
     {
         if (!array_key_exists($section, static::$Sections))
         {
@@ -109,17 +139,23 @@ abstract class Api
             );
         }
         if (static::$Sections[$section] instanceof Api)
+        {
+            /** @var Api $api */
+            $api = static::$Sections[$section];
+            if ($credentials && $api->getDefaultCredentials() !== $credentials)
+                $api->setDefaultCredentials($credentials);
             return static::$Sections[$section];
+        }
         switch ($section)
         {
             case self::SECTION_VALIDATE:
-                static::$Sections[$section] = new Validate($args);
+                static::$Sections[$section] = new Validate($args, $credentials);
                 break;
             case self::SECTION_PUSH:
-                static::$Sections[$section] = new Push($args);
+                static::$Sections[$section] = new Push($args, $credentials);
                 break;
             case self::SECTION_RECEIPT:
-                static::$Sections[$section] = new Receipt($args);
+                static::$Sections[$section] = new Receipt($args, $credentials);
                 break;
         }
         return self::$Sections[$section];
