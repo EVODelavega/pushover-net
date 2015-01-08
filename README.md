@@ -3,7 +3,9 @@ pushover-net
 
 Simple, standalone, clean PHP wrapper for the pushover.net API
 
-[![Build Status](https://travis-ci.org/EVODelavega/pushover-net.svg?branch=feature%2Fbeta)](https://travis-ci.org/EVODelavega/pushover-net)
+MASTER : [![Build Status](https://travis-ci.org/EVODelavega/pushover-net.svg?branch=master)](https://travis-ci.org/EVODelavega/pushover-net)
+BETA   : [![Build Status](https://travis-ci.org/EVODelavega/pushover-net.svg?branch=feature%2Fbeta)](https://travis-ci.org/EVODelavega/pushover-net)
+PHP5.3 : [![Build Status](https://travis-ci.org/EVODelavega/pushover-net.svg?branch=version%2Fphp5-3)](https://travis-ci.org/EVODelavega/pushover-net)
 
 ### A basic example (push a message):
 
