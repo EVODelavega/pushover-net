@@ -115,6 +115,12 @@ class ResponseTest extends PHPUnit_Framework_TestCase
                 {
                     $this->assertNull($receipt->getLastDeliveredAt());
                 }
+                //test error-response setter:
+                $receipt->setErrorResponse($response);
+                $this->assertEquals(
+                    $response,
+                    $receipt->getErrorResponse()
+                );
             }
             else
             {

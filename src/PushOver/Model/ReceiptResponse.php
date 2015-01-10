@@ -153,7 +153,12 @@ class ReceiptResponse extends Data
         if ($acknowledgedAt != 0)
         {
             if (!$acknowledgedAt instanceof \DateTime)
-                $acknowledgedAt = new \DateTime($acknowledgedAt);
+            {
+                if (is_numeric($acknowledgedAt))
+                    $acknowledgedAt = \DateTime::createFromFormat('U', $acknowledgedAt);
+                else
+                    $acknowledgedAt = new \DateTime($acknowledgedAt);
+            }
         }
         else
         {
@@ -219,7 +224,12 @@ class ReceiptResponse extends Data
         if ($callBackAt != 0)
         {
             if (!$callBackAt instanceof \DateTime)
-                $callBackAt = new \DateTime($callBackAt);
+            {
+                if (is_numeric($callBackAt))
+                    $callBackAt = \DateTime::createFromFormat('U', $callBackAt);
+                else
+                    $callBackAt = new \DateTime($callBackAt);
+            }
         }
         else
         {
@@ -292,7 +302,12 @@ class ReceiptResponse extends Data
         if ($lastDeliveredAt != 0)
         {
             if (!$lastDeliveredAt instanceof \DateTime)
-                $lastDeliveredAt = new \DateTime($lastDeliveredAt);
+            {
+                if (is_numeric($lastDeliveredAt))
+                    $lastDeliveredAt = \DateTime::createFromFormat('U', $lastDeliveredAt);
+                else
+                    $lastDeliveredAt = new \DateTime($lastDeliveredAt);
+            }
         }
         else
         {
