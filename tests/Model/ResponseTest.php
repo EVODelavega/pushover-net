@@ -34,6 +34,9 @@ class ResponseTest extends PHPUnit_Framework_TestCase
                 $vals->request,
                 $resp->getRequest()
             );
+            $this->assertEmpty(
+                $resp->getErrors()
+            );
         }
     }
 
@@ -48,6 +51,20 @@ class ResponseTest extends PHPUnit_Framework_TestCase
                 Response::STATUS_OK,
                 $resp->getStatus()
             );
+            $this->assertNotEmpty(
+                $resp->getErrors()
+            );
+            $this->assertEquals(
+                $vals->request,
+                $resp->getRequest()
+            );
+            if (isset($vals->user))
+            {
+                $this->assertEquals(
+                    $vals->user,
+                    $resp->getUser()
+                );
+            }
         }
     }
 }
