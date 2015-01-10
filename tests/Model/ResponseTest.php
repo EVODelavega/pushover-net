@@ -36,4 +36,18 @@ class ResponseTest extends PHPUnit_Framework_TestCase
             );
         }
     }
+
+    public function testErrorResponses()
+    {
+        foreach ($this->data->error as $vals)
+        {
+            $resp = new Response(
+                $vals
+            );
+            $this->assertNotEquals(
+                Response::STATUS_OK,
+                $resp->getStatus()
+            );
+        }
+    }
 }
