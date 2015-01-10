@@ -49,7 +49,7 @@
         "last_delivered_at": 0,
         "expired": 0,
         "expires_at": 3600,
-        "called_back": 1,
+        "called_back": 0,
         "called_back_at": 0
       },
       "1234657890abcdefhijklmnopqrXYZ": {
@@ -60,7 +60,7 @@
         "expired": 0,
         "expires_at": 3600,
         "called_back": 1,
-        "called_back_at": 0
+        "called_back_at": "1 hour ago"
       },
       "1234657890abcdefhijklmnopqrXYZ": {
         "status": 0,

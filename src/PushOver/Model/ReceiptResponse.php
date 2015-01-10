@@ -42,12 +42,12 @@ class ReceiptResponse extends Data
     /**
      * @var int
      */
-    protected $callBack = 0;
+    protected $calledBack = 0;
 
     /**
      * @var \DateTime
      */
-    protected $callBackAt = null;
+    protected $calledBackAt = null;
 
     /**
      * @param \stdClass $obj
@@ -144,18 +144,18 @@ class ReceiptResponse extends Data
     /**
      * @return int
      */
-    public function getCallBack()
+    public function getCalledBack()
     {
-        return $this->callBack;
+        return $this->calledBack;
     }
 
     /**
      * @param int $callBack
      * @return $this
      */
-    public function setCallBack($callBack)
+    public function setCalledBack($callBack)
     {
-        $this->callBack = (int) $callBack;
+        $this->calledBack = (int) $callBack;
 
         return $this;
     }
@@ -163,16 +163,16 @@ class ReceiptResponse extends Data
     /**
      * @return \DateTime
      */
-    public function getCallBackAt()
+    public function getCalledBackAt()
     {
-        return $this->callBackAt;
+        return $this->calledBackAt;
     }
 
     /**
      * @param \DateTime $callBackAt
      * @return $this
      */
-    public function setCallBackAt($callBackAt)
+    public function setCalledBackAt($callBackAt)
     {
         if ($callBackAt != 0)
         {
@@ -183,7 +183,7 @@ class ReceiptResponse extends Data
         {
             $callBackAt = null;
         }
-        $this->callBackAt = $callBackAt;
+        $this->calledBackAt = $callBackAt;
 
         return $this;
     }
@@ -222,7 +222,12 @@ class ReceiptResponse extends Data
     public function setExpiresAt($expiresAt)
     {
         if (!$expiresAt instanceof \DateTime)
-            $expiresAt = new \DateTime($expiresAt);
+        {
+            if (is_numeric($expiresAt))
+                $expiresAt = \DateTime::createFromFormat('U', $expiresAt);
+            else
+                $expiresAt = new \DateTime($expiresAt);
+        }
         $this->expiresAt = $expiresAt;
 
         return $this;

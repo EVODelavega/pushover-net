@@ -61,8 +61,85 @@ class ResponseTest extends PHPUnit_Framework_TestCase
         /** @var Response $response */
         foreach ($responses as $response)
         {
-            $this->assertObjectHasAttribute($response->getReceipt(), $this->data->receipts);
+            $this->assertObjectHasAttribute(
+                $response->getReceipt(),
+                $this->data->receipts
+            );
+            $vals = $this->data->receipts->{$response->getReceipt()};
+            $receipt = new ReceiptResponse(
+                $this->prepareReceipt(
+                    $vals
+                )
+            );
+            $this->assertEquals(
+                $vals->status,
+                $receipt->getStatus()
+            );
+            if ($receipt->getStatus())
+            {
+                $this->assertInstanceOf(
+                	'DateTime',
+                    $receipt->getExpiresAt()
+                );
+                $this->assertEquals(
+                    $vals->acknowledged,
+                    $receipt->getAcknowledged()
+                );
+                if ($vals->acknowledged)
+                {
+                    $this->assertInstanceOf(
+                        'DateTime',
+                        $receipt->getAcknowledgedAt()
+                    );
+                }
+                $this->assertEquals(
+                    $vals->called_back,
+                    $receipt->getCalledBack()
+                );
+                if ($vals->called_back)
+                {
+                    $this->assertInstanceOf(
+                        'DateTime',
+                        $receipt->getCalledBackAt()
+                    );
+                }
+                if ($vals->last_delivered_at != 0)
+                {
+                    $this->assertInstanceOf(
+                        'DateTime',
+                        $receipt->getLastDeliveredAt()
+                    );
+                }
+            }
         }
+    }
+
+    protected function prepareReceipt(\stdClass $data)
+    {
+        if ($data->status == Response::STATUS_OK)
+        {
+            $data->expires_at += time();//timestamp required
+            if ($data->acknowledged)
+            {
+                $time = new \DateTime($data->acknowledged_at);
+                $data->acknowledged_at = $time->format('U');
+            }
+            if ($data->last_delivered_at != 0)
+            {
+                $time =  new \DateTime(
+                    $data->last_delivered_at
+                );
+                $data->last_delivered_at = $time->format('U');
+            }
+            if ($data->called_back)
+            {
+                $time = new \DateTime(
+                    $data->called_back_at
+                );
+                $data->called_back_at = $time->format('U');
+            }
+        }
+        return $data;
     }
 
     public function testErrorResponses()
