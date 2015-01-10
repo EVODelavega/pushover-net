@@ -77,6 +77,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
             );
             if ($receipt->getStatus())
             {
+                $this->assertNull($receipt->getErrorResponse());
                 $this->assertInstanceOf(
                 	'DateTime',
                     $receipt->getExpiresAt()
@@ -110,6 +111,21 @@ class ResponseTest extends PHPUnit_Framework_TestCase
                         $receipt->getLastDeliveredAt()
                     );
                 }
+                else
+                {
+                    $this->assertNull($receipt->getLastDeliveredAt());
+                }
+            }
+            else
+            {
+                $this->assertInstanceOf(
+                    get_class($response),
+                    $receipt->getErrorResponse()
+                );
+                $this->assertNotEmpty(
+                    $receipt->getErrorResponse()
+                        ->getErrors()
+                );
             }
         }
     }

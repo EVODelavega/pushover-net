@@ -1,4 +1,5 @@
 <?php
+use PushOver\Model\Response;
 namespace PushOver\Model;
 
 
@@ -50,11 +51,52 @@ class ReceiptResponse extends Data
     protected $calledBackAt = null;
 
     /**
+     * @var Response
+     */
+    protected $errorResponse = null;
+
+    /**
      * @param \stdClass $obj
      */
     public function __construct(\stdClass $obj)
     {
+        if (isset($obj->status) && $obj->status != Response::STATUS_OK && isset($obj->errors))
+        {
+            $this->errorResponse = new Response($obj);
+        }
         $this->setByArray((array) $obj);
+    }
+
+    /**
+     * @param Response|\stdClass $obj
+     * @return $this
+     * @throws \InvalidArgumentException
+     */
+    public function setErrorResponse($obj)
+    {
+        if (!$obj instanceof Response)
+        {
+            if ($obj instanceof \stdClass)
+                $obj = new Response($obj);
+            else
+                throw new \InvalidArgumentException(
+                    sprintf(
+                        '%s expects Response instance, or stdClass %s given',
+                        __METHOD__,
+                        gettype($obj)
+                    )
+                );
+        }
+        $this->errorResponse = $obj;
+        return $this;
+    }
+
+    /**
+     * @return null|Response
+     */
+    public function getErrorResponse()
+    {
+        return $this->errorResponse;
     }
 
     /**
