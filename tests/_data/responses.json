@@ -41,8 +41,7 @@
       "request":"3c0b5952fba0abX7805159217077c177"
     }
   ],
-  "receipts": [
-    {
+  "receipts": {
       "1234657890abcdefhijklmnopqrstu": {
         "status": 1,
         "acknowledged": 0,
@@ -70,5 +69,4 @@
         ]
       }
     }
-  ]
 }

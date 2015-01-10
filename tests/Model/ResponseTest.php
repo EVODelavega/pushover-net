@@ -1,6 +1,7 @@
 <?php
 
 use PushOver\Model\Response;
+use PushOver\Model\ReceiptResponse;
 
 class ResponseTest extends PHPUnit_Framework_TestCase
 {
@@ -12,13 +13,16 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->data = json_decode(
-            file_get_contents('./tests/_data/responses.json')
+            file_get_contents(
+            	'./tests/_data/responses.json'
+            )
         );
     }
 
     public function testResponseConstructor()
     {
-        foreach ($this->data->success as $vals)
+        $receiptResponses = array();
+        foreach ($this->data->success as $k => $vals)
         {
             $resp = new Response(
                 $vals
@@ -37,6 +41,27 @@ class ResponseTest extends PHPUnit_Framework_TestCase
             $this->assertEmpty(
                 $resp->getErrors()
             );
+            if (in_array($k, $this->data->receiptKeys))
+            {
+                $this->assertEquals(
+                    $vals->receipt,
+                    $resp->getReceipt()
+                );
+                $receiptResponses[] = $resp;
+            }
+        }
+        return $receiptResponses;
+    }
+
+    /**
+     * @depends testResponseConstructor
+     */
+    public function testResponseReceipts(array $responses)
+    {
+        /** @var Response $response */
+        foreach ($responses as $response)
+        {
+            $this->assertObjectHasAttribute($response->getReceipt(), $this->data->receipts);
         }
     }
 
