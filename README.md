@@ -77,16 +77,15 @@ Good question. Put simply this is a minimalistic setup which allows you to:
 
 Another good question. Things that are missing from this wrapper (but will be added shortly) are:
 
-- Support for XML formatted responses
-- More examples
-- Unit tests
+- Support for XML formatted responses (will not be added any time soon)
+- Unit tests (Are being added now)
 - Improve data-model consistency, and make the overall API more consistent
 
 What might be added in the future?
 
 - Better error/exception handling
+- Consistency tweaks (return values/property types)
 - Data models should implement the `\Traversable` interface somehow
-- A php 5.3 compatible branch??
 - ...
 
 I'm open to suggestions, so if there's something you're looking for and, like me, found the existing wrappers lacking: create an issue, and I'll be happy to look into it
