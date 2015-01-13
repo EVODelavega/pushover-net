@@ -1,6 +1,7 @@
 <?php
-use PushOver\Model\Response;
 namespace PushOver\Model;
+
+use PushOver\Model\Response;
 
 
 class ReceiptResponse extends Data

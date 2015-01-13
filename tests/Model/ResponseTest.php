@@ -171,6 +171,15 @@ class ResponseTest extends PHPUnit_Framework_TestCase
             $resp = new Response(
                 $vals
             );
+            if (isset($vals->user))
+            {
+                $this->assertEquals(
+                    'user identifier is invalid',
+                    reset(
+                        $resp->getErrors()
+                    )
+                );
+            }
             $this->assertNotEquals(
                 Response::STATUS_OK,
                 $resp->getStatus()
@@ -178,6 +187,27 @@ class ResponseTest extends PHPUnit_Framework_TestCase
             $this->assertNotEmpty(
                 $resp->getErrors()
             );
+            $objErrors = $resp->getErrors();
+            $this->assertEquals(
+                $vals->errors,
+                $resp->getErrors()
+            );
+            $objErr = $resp->getErrors();
+            $this->assertEquals(
+                count($vals->errors),
+                count($objErr)
+            );
+            foreach ($vals->errors as $k => $v)
+            {
+                $this->assertArrayHasKey(
+                    $k,
+                    $objErr
+                );
+                $this->assertEquals(
+                    $v,
+                    $objErr[$k]
+                );
+            }
             $this->assertEquals(
                 $vals->request,
                 $resp->getRequest()
